@@ -18,7 +18,7 @@ export default class Todos extends Component {
       },
       {
         id: "r2ere22r3r",
-        text: "wsdfjfjoss f ffwofjofj",
+        text: "good f ffwofjofj",
         description: "fsfjljsl fowrj sfjcn sknowf",
         time: new Date(),
         isSelect: false,
@@ -28,6 +28,7 @@ export default class Todos extends Component {
     searchTram: "",
     isOpenTodoForm: false,
     view: "list",
+    filter: "All",
   };
 
   toggleSelect = (todoId) => {
@@ -49,7 +50,18 @@ export default class Todos extends Component {
       isOpenTodoForm: !this.state.isOpenTodoForm,
     });
   };
-  taskSearchHandler = () => {};
+
+  taskSearchHandler = (value) => {
+    this.setState({
+      searchTram: value,
+    });
+  };
+
+  searchTodos = () => {
+    return this.state.todos.filter((todo) =>
+      todo.text.toLowerCase().includes(this.state.searchTram.toLowerCase())
+    );
+  };
 
   createTodo = (todo) => {
     todo.id = shortid.generate();
@@ -70,13 +82,24 @@ export default class Todos extends Component {
     });
   };
 
+  taskFilterHandler = (value) => {
+    this.setState({ filter: value });
+  };
+
+  filterTodo = (todos) => {
+    const { filter } = this.state;
+    if (filter === "complete") {
+      return todos.filter((todo) => todo.isComplete);
+    } else if (filter === "running") {
+      return todos.filter((todo) => !todo.isComplete);
+    } else {
+      return todos;
+    }
+  };
+
   render() {
-    // view
-    //   taskFilterHandler,
-    // viewChangeHandler,
-    // clearSelect,
-    // clearComplete,
-    // reset,
+    let todos = this.searchTodos();
+    todos = this.filterTodo(todos);
     return (
       <>
         <div className="mb-5">
@@ -95,13 +118,13 @@ export default class Todos extends Component {
           <div>
             {this.state.view === "list" ? (
               <ListView
-                todos={this.state.todos}
+                todos={todos}
                 toggleSelect={this.toggleSelect}
                 toggleComplete={this.toggleComplete}
               />
             ) : (
               <TableView
-                todos={this.state.todos}
+                todos={todos}
                 toggleSelect={this.toggleSelect}
                 toggleComplete={this.toggleComplete}
               />
