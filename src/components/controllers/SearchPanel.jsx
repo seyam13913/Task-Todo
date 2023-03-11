@@ -6,7 +6,7 @@ const SearchPanel = ({ tram, taskSearchHandler, toggleForm }) => {
   return (
     <div className="d-flex">
       <Input
-        className="mx-3"
+        className="mx-3 ms-0"
         placeholder="Enter Search tram"
         value={tram}
         onChange={(e) => taskSearchHandler(e.target.value)}

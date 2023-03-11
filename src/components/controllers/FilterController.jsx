@@ -2,16 +2,18 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Button, ButtonGroup } from "reactstrap";
 
-const FilterController = ({ allTask, runningTask, completedTask }) => {
+const FilterController = ({ taskFilterHandler }) => {
   return (
     <ButtonGroup>
-      <Button onClick={() => allTask("all")}>All</Button>
-      <Button onClick={() => runningTask("running")}>Running</Button>
-      <Button onClick={() => completedTask("complete")}>Completed</Button>
+      <Button onClick={() => taskFilterHandler("all")}>All</Button>
+      <Button onClick={() => taskFilterHandler("running")}>Running</Button>
+      <Button onClick={() => taskFilterHandler("complete")}>Completed</Button>
     </ButtonGroup>
   );
 };
 
-FilterController.propTypes = {};
+FilterController.propTypes = {
+  taskFilterHandler: PropTypes.func.isRequired,
+};
 
 export default FilterController;

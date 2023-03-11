@@ -27,6 +27,7 @@ export default class Todos extends Component {
     ],
     searchTram: "",
     isOpenTodoForm: false,
+    view: "list",
   };
 
   toggleSelect = (todoId) => {
@@ -63,29 +64,48 @@ export default class Todos extends Component {
     this.toggleForm();
   };
 
+  viewChangeHandler = (e) => {
+    this.setState({
+      view: e.target.value,
+    });
+  };
+
   render() {
+    // view
+    //   taskFilterHandler,
+    // viewChangeHandler,
+    // clearSelect,
+    // clearComplete,
+    // reset,
     return (
       <>
-        <div className=" text-center mb-5">
-          <h2>Hello World</h2>
+        <div className="mb-5">
+          <h2 className="text-center">Hello World</h2>
           <Controller
             tram={this.state.searchTram}
             toggleForm={this.toggleForm}
             taskSearchHandler={this.taskSearchHandler}
+            view={this.state.view}
+            viewChangeHandler={this.viewChangeHandler}
+            taskFilterHandler={this.taskFilterHandler}
+            clearSelect={this.clearSelect}
+            clearComplete={this.clearComplete}
+            reset={this.reset}
           />
           <div>
-            <ListView
-              todos={this.state.todos}
-              toggleSelect={this.toggleSelect}
-              toggleComplete={this.toggleComplete}
-            />
-          </div>
-          <div>
-            <TableView
-              todos={this.state.todos}
-              toggleSelect={this.toggleSelect}
-              toggleComplete={this.toggleComplete}
-            />
+            {this.state.view === "list" ? (
+              <ListView
+                todos={this.state.todos}
+                toggleSelect={this.toggleSelect}
+                toggleComplete={this.toggleComplete}
+              />
+            ) : (
+              <TableView
+                todos={this.state.todos}
+                toggleSelect={this.toggleSelect}
+                toggleComplete={this.toggleComplete}
+              />
+            )}
           </div>
         </div>
         <CreateTodo
