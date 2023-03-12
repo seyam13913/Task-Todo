@@ -97,6 +97,29 @@ export default class Todos extends Component {
     }
   };
 
+  clearSelect = () => {
+    const todos = this.state.todos.filter((todo) => !todo.isSelect);
+    this.setState({
+      todos,
+    });
+  };
+
+  clearComplete = () => {
+    const todos = this.state.todos.filter((todo) => !todo.isComplete);
+    this.setState({
+      todos,
+    });
+  };
+
+  reset = () => {
+    this.setState({
+      searchTram: "",
+      isOpenTodoForm: false,
+      view: "list",
+      filter: "All",
+    });
+  };
+
   render() {
     let todos = this.searchTodos();
     todos = this.filterTodo(todos);
